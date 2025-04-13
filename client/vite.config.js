@@ -13,4 +13,8 @@ export default defineConfig({
       },
     },
   },
+  preview: {
+    port: 4173,
+    allowedHosts: ['challenge-9a-frontend.onrender.com'],
+  },
 });
