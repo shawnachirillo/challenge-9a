@@ -82,9 +82,16 @@ npm run dev
 
 ---
 
-## 🧠 Author
+## MUST READ!!!!!!!
+
+## 🔗 Deployed Application
+[Live Site (Frontend)](https://challenge-9a-frontend.onrender.com)
+
+[Backend API (Render)](https://challenge-9a.onrender.com)
+(used by frontend only — nothing to display directly here)git 
+
 Shawna Chirillo  
-GitHub: [@shawnachirillo](https://github.com/shawnachirillo)
+GitHub: [@shawnachirillo](https://github.com/shawnachirillo/challenge-9a.git)
 
 ---
 
