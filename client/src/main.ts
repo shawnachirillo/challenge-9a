@@ -1,11 +1,11 @@
-import './styles/jass.css';
+// src/main.ts
 
-const API_BASE = import.meta.env.VITE_API_BASE;
+import './styles/style.css'; 
 
-// API CALL FUNCS
+const API_BASE = import.meta.env.VITE_API_BASE_URL;
 
 const fetchWeather = async (cityName: string) => {
-  const response = await fetch(`${API_BASE}/weather/`, {
+  const response = await fetch(`${API_BASE}/api/weather/`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -21,7 +21,7 @@ const fetchWeather = async (cityName: string) => {
 };
 
 const fetchSearchHistory = async () => {
-  const history = await fetch(`${API_BASE}/weather/history`, {
+  const history = await fetch(`${API_BASE}/api/weather/history`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -31,15 +31,13 @@ const fetchSearchHistory = async () => {
 };
 
 const deleteCityFromHistory = async (id: string) => {
-  await fetch(`${API_BASE}/weather/history/${id}`, {
+  await fetch(`${API_BASE}/api/weather/history/${id}`, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
     },
   });
 };
-
-// /RENDER CURRENT WEATHER
 
 function renderCurrentWeather(weather: any) {
   const weatherContainer = document.getElementById('current-weather');
@@ -57,8 +55,6 @@ function renderCurrentWeather(weather: any) {
     <p><strong>Wind Speed:</strong> ${weather.windSpeed} km/h</p>
   `;
 }
-
-// /RENDER FORECAST
 
 function renderForecast(forecast: any[]) {
   const forecastContainer = document.getElementById('forecast');
