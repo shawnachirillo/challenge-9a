@@ -1,8 +1,8 @@
 // src/main.ts
 
-import '../styles/jass.css';
+import './styles/jass.css';
 
-const API_BASE = import.meta.env.VITE_API_BASE_URL;
+const API_BASE = import.meta.env.VITE_API_BASE;
 
 const fetchWeather = async (cityName: string) => {
   const response = await fetch(`${API_BASE}/api/weather/`, {
