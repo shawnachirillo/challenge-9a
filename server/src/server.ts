@@ -1,21 +1,37 @@
-import dotenv from 'dotenv';
 import express from 'express';
+import dotenv from 'dotenv';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+// Load environment variables
 dotenv.config();
 
-// Import the routes
+// Required for __dirname in ES Modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Import routes
 import routes from './routes/index.js';
 
 const app = express();
-
 const PORT = process.env.PORT || 3001;
 
-// TODO: Serve static files of entire client dist folder
-app.use(express.static('../client/dist'));
-// TODO: Implement middleware for parsing JSON and urlencoded form data
-app.use(express.json());
-app.use(express.urlencoded({ extended: true}));
-// TODO: Implement middleware to connect the routes
-app.use(routes);
+// ✅ Serve static files from Vite client build
+app.use(express.static(path.resolve(__dirname, '../../client/dist')));
 
-// Start the server on the port
-app.listen(PORT, () => console.log(`Listening on PORT: ${PORT}`));
+// ✅ JSON and URL-encoded middleware
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// ✅ Mount your API routes
+app.use('/api', routes);
+
+// ✅ Root route so Render shows something
+app.get('/', (_req, res) => {
+  res.send('🌤️ Weather API is running! Visit /api/weather for POST.');
+});
+
+// Start server
+app.listen(PORT, () => {
+  console.log(`✅ Server listening on http://localhost:${PORT}`);
+});
