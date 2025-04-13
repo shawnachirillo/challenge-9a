@@ -1,4 +1,4 @@
-import './styles/style.css'; // make sure this file exists and is correct
+import './styles/jass.css';
 
 const API_BASE = import.meta.env.VITE_API_BASE;
 
