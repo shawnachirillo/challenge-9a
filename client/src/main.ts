@@ -1,7 +1,8 @@
-import './styles/style.css'; 
+import './styles/style.css';
+
 const API_BASE = import.meta.env.VITE_API_BASE;
 
-// ...
+// API CALL FUNCS
 
 const fetchWeather = async (cityName: string) => {
   const response = await fetch(`${API_BASE}/weather/`, {
@@ -37,7 +38,9 @@ const deleteCityFromHistory = async (id: string) => {
     },
   });
 };
-// Removed duplicate function definition
+
+// /RENDER CURRENT WEATHER
+
 function renderCurrentWeather(weather: any) {
   const weatherContainer = document.getElementById('current-weather');
   if (!weatherContainer) {
@@ -54,7 +57,9 @@ function renderCurrentWeather(weather: any) {
     <p><strong>Wind Speed:</strong> ${weather.windSpeed} km/h</p>
   `;
 }
-// Removed duplicate function definition
+
+// /RENDER FORECAST
+
 function renderForecast(forecast: any[]) {
   const forecastContainer = document.getElementById('forecast');
   if (!forecastContainer) {
