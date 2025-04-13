@@ -25,6 +25,8 @@ export default defineConfig(({ mode }) => {
           secure: false,
         },
       },
+      host: true,
+      allowedHosts: ['challenge-9a-frontend.onrender.com'],
     },
   };
 });
