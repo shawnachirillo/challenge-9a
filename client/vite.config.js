@@ -1,5 +1,4 @@
 import { defineConfig, loadEnv } from 'vite';
-import path from 'path';
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
@@ -18,6 +17,7 @@ export default defineConfig(({ mode }) => {
     },
     preview: {
       port: 4173,
+      host: true,
       proxy: {
         '/api': {
           target: env.VITE_API_BASE,
@@ -25,7 +25,6 @@ export default defineConfig(({ mode }) => {
           secure: false,
         },
       },
-      host: true,
       allowedHosts: ['challenge-9a-frontend.onrender.com'],
     },
   };

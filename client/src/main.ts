@@ -1,11 +1,9 @@
-// src/main.ts
-
-import './styles/jass.css';
+import './styles/style.css'; // make sure this file exists and is correct
 
 const API_BASE = import.meta.env.VITE_API_BASE;
 
 const fetchWeather = async (cityName: string) => {
-  const response = await fetch(`${API_BASE}/api/weather/`, {
+  const response = await fetch(`${API_BASE}/weather/`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -14,67 +12,55 @@ const fetchWeather = async (cityName: string) => {
   });
 
   const weatherData = await response.json();
-  console.log('weatherData: ', weatherData);
 
   renderCurrentWeather(weatherData[0]);
   renderForecast(weatherData.slice(1));
 };
 
 const fetchSearchHistory = async () => {
-  const history = await fetch(`${API_BASE}/api/weather/history`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
-  return history;
+  const response = await fetch(`${API_BASE}/weather/history`);
+  return response.json();
 };
 
 const deleteCityFromHistory = async (id: string) => {
-  await fetch(`${API_BASE}/api/weather/history/${id}`, {
+  await fetch(`${API_BASE}/weather/history/${id}`, {
     method: 'DELETE',
-    headers: {
-      'Content-Type': 'application/json',
-    },
   });
 };
 
 function renderCurrentWeather(weather: any) {
   const weatherContainer = document.getElementById('current-weather');
-  if (!weatherContainer) {
-    console.error('No element with id "current-weather" found.');
-    return;
-  }
+  if (!weatherContainer) return;
 
   weatherContainer.innerHTML = `
     <h2>Current Weather</h2>
-    <p><strong>City:</strong> ${weather.cityName}</p>
-    <p><strong>Temperature:</strong> ${weather.temperature}°C</p>
-    <p><strong>Condition:</strong> ${weather.condition}</p>
+    <p><strong>City:</strong> ${weather.city}</p>
+    <p><strong>Date:</strong> ${weather.date}</p>
+    <p><strong>Temperature:</strong> ${weather.tempF}°F</p>
+    <p><strong>Condition:</strong> ${weather.iconDescription}</p>
+    <img src="https://openweathermap.org/img/w/${weather.icon}.png" alt="${weather.iconDescription}">
     <p><strong>Humidity:</strong> ${weather.humidity}%</p>
-    <p><strong>Wind Speed:</strong> ${weather.windSpeed} km/h</p>
+    <p><strong>Wind Speed:</strong> ${weather.windSpeed} MPH</p>
   `;
 }
 
 function renderForecast(forecast: any[]) {
   const forecastContainer = document.getElementById('forecast');
-  if (!forecastContainer) {
-    console.error('No element with id "forecast" found.');
-    return;
-  }
+  if (!forecastContainer) return;
 
-  forecastContainer.innerHTML = '<h2>Weather Forecast</h2>';
+  forecastContainer.innerHTML = '<h2>5-Day Forecast</h2>';
 
-  forecast.forEach((day) => {
-    const dayElement = document.createElement('div');
-    dayElement.classList.add('forecast-day');
-    dayElement.innerHTML = `
+  forecast.forEach(day => {
+    const dayDiv = document.createElement('div');
+    dayDiv.className = 'forecast-day';
+    dayDiv.innerHTML = `
       <p><strong>Date:</strong> ${day.date}</p>
-      <p><strong>Temperature:</strong> ${day.temperature}°C</p>
-      <p><strong>Condition:</strong> ${day.condition}</p>
-      <p><strong>Humidity:</strong> ${day.humidity}%</p>
-      <p><strong>Wind Speed:</strong> ${day.windSpeed} km/h</p>
+      <img src="https://openweathermap.org/img/w/${day.icon}.png" alt="${day.iconDescription}">
+      <p>${day.iconDescription}</p>
+      <p>Temp: ${day.tempF}°F</p>
+      <p>Humidity: ${day.humidity}%</p>
+      <p>Wind: ${day.windSpeed} MPH</p>
     `;
-    forecastContainer.appendChild(dayElement);
+    forecastContainer.appendChild(dayDiv);
   });
 }
