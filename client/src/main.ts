@@ -1,11 +1,10 @@
-// src/main.ts
-
 import './styles/jass.css';
 
 const API_BASE = import.meta.env.VITE_API_BASE;
 
+// Fetch weather data for the given city
 const fetchWeather = async (cityName: string) => {
-  const response = await fetch(`${API_BASE}/api/weather/`, {
+  const response = await fetch(`${API_BASE}/weather`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -20,8 +19,9 @@ const fetchWeather = async (cityName: string) => {
   renderForecast(weatherData.slice(1));
 };
 
+// Fetch user's past searched cities
 const fetchSearchHistory = async () => {
-  const history = await fetch(`${API_BASE}/api/weather/history`, {
+  const history = await fetch(`${API_BASE}/weather/history`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -30,8 +30,9 @@ const fetchSearchHistory = async () => {
   return history;
 };
 
+// Delete a specific city from the search history
 const deleteCityFromHistory = async (id: string) => {
-  await fetch(`${API_BASE}/api/weather/history/${id}`, {
+  await fetch(`${API_BASE}/weather/history/${id}`, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
@@ -39,6 +40,7 @@ const deleteCityFromHistory = async (id: string) => {
   });
 };
 
+// Render the current weather details
 function renderCurrentWeather(weather: any) {
   const weatherContainer = document.getElementById('current-weather');
   if (!weatherContainer) {
@@ -56,6 +58,7 @@ function renderCurrentWeather(weather: any) {
   `;
 }
 
+// Render the 5-day weather forecast
 function renderForecast(forecast: any[]) {
   const forecastContainer = document.getElementById('forecast');
   if (!forecastContainer) {
